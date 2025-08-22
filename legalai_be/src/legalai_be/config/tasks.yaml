@@ -1,17 +1,69 @@
-research_task:
+legal_research_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Conduct comprehensive legal research on {topic}. Your research must include:
+    1. Identify all relevant laws, acts, and regulations (both central and state level if applicable)
+    2. Find applicable case law and precedents with proper citations
+    3. Research procedural requirements and compliance obligations
+    4. Identify any recent amendments or updates to relevant laws
+    5. Note any jurisdiction-specific considerations
+    6. Include relevant legal definitions and interpretations
+    7. Identify potential legal risks or considerations
+    Current year is {current_year} - ensure all information is up-to-date.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A comprehensive legal research report containing:
+    - List of applicable laws with section numbers and citations
+    - Relevant case law with proper citations (case name, year, court)
+    - Key legal definitions and interpretations
+    - Procedural requirements and timelines
+    - Recent amendments or changes
+    - Jurisdiction-specific considerations
+    - Potential legal issues or risks to consider
+  agent: legal_researcher
 
-reporting_task:
+legal_analysis_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Based on the legal research provided, create a detailed legal analysis for {topic} that includes:
+    1. Legal framework analysis - identify the primary and secondary legal sources
+    2. Rights and obligations analysis - what are the legal rights and duties involved
+    3. Risk assessment - potential legal risks and how to mitigate them
+    4. Compliance requirements - what must be done to stay legally compliant
+    5. Alternative legal options or approaches available
+    6. Consequences of non-compliance
+    Ensure all analysis is backed by proper legal citations and authorities.
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A structured legal analysis document containing:
+    - Executive summary of legal position
+    - Detailed legal framework breakdown
+    - Rights and obligations matrix
+    - Risk assessment with mitigation strategies
+    - Compliance checklist
+    - Alternative legal approaches
+    - Consequences and penalties for non-compliance
+    - Recommendations with legal backing
+  agent: legal_analyst
+
+procedure_guidance_task:
+  description: >
+    Create a comprehensive step-by-step procedural guide for {topic} including:
+    1. Pre-requisites and eligibility criteria
+    2. Required documentation with templates/formats where applicable
+    3. Step-by-step process with timelines
+    4. Filing procedures and fee structures
+    5. Authority contacts and office locations
+    6. Appeal or review mechanisms if applicable
+    7. Common pitfalls to avoid
+    8. Post-completion follow-up requirements
+    Ensure all procedures are current as of {current_year}.
+  expected_output: >
+    A complete procedural handbook formatted as a step-by-step guide containing:
+    - Eligibility checklist
+    - Document preparation guide with required formats
+    - Detailed step-by-step process with estimated timelines
+    - Fee structure and payment methods
+    - Authority contact information and office details
+    - Appeals and review process
+    - Troubleshooting guide for common issues
+    - Post-completion compliance requirements
+    - Quick reference checklist
+    Format as markdown with clear headings, numbered steps, and bullet points for easy reading.
+  agent: procedure_specialist

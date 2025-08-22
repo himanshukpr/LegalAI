@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const AskAI = () => {
 
@@ -17,7 +18,10 @@ const AskAI = () => {
   ]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Get backend URL from environment variables
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:5000';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!question.trim()) return;
 
@@ -26,25 +30,76 @@ const AskAI = () => {
     setMessages(newMessages);
     setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponse = generateAIResponse(question);
-      setMessages([...newMessages, { type: 'ai', content: aiResponse }]);
+    try {
+      // Make API call to backend
+      const response = await axios.post(`${BACKEND_URL}/api/ai_research`, {
+        "query": question.trim()
+      });
+
+      // Add AI response
+      const aiResponse = response.data.response || response.data.result || 'I received your question but couldn\'t generate a proper response. Please try again.';
+      setMessages([...newMessages, { type: 'ai', content: aiResponse, isMarkdown: true }]);
+      
+    } catch (error) {
+      console.error('Error calling AI research API:', error);
+      let errorMessage = 'Sorry, I\'m having trouble connecting to the AI service. ';
+      
+      if (error.response) {
+        // Server responded with error status
+        errorMessage += `Server responded with status ${error.response.status}. `;
+      } else if (error.request) {
+        // Request was made but no response received
+        errorMessage += 'Please make sure the backend server is running on ' + BACKEND_URL + '. ';
+      } else {
+        // Something else happened
+        errorMessage += 'An unexpected error occurred. ';
+      }
+      
+      errorMessage += 'Please try again or contact support if the issue persists.';
+      
+      setMessages([...newMessages, { type: 'ai', content: errorMessage }]);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
 
     setQuestion('');
   };
 
-  const generateAIResponse = (userQuestion) => {
-    const responses = [
-      "Based on legal precedent, I can provide some insights on this matter. However, please note that this is for informational purposes only and doesn't constitute legal advice.",
-      "This is an interesting legal question. Let me break down the key legal principles that apply to your situation.",
-      "I've analyzed relevant case law and statutes related to your query. Here's what I found:",
-      "From a legal perspective, there are several important factors to consider in this case.",
-      "Thank you for your question. Let me provide you with some relevant legal information and guidance."
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
+  // Function to render markdown content
+  const renderMarkdown = (content) => {
+    // Simple markdown parser for basic formatting
+    let html = content
+      // Headers
+      .replace(/^### (.*$)/gm, '<h3 class="text-lg font-semibold text-white mt-4 mb-2">$1</h3>')
+      .replace(/^## (.*$)/gm, '<h2 class="text-xl font-semibold text-white mt-4 mb-2">$1</h2>')
+      .replace(/^# (.*$)/gm, '<h1 class="text-2xl font-bold text-white mt-4 mb-2">$1</h1>')
+      
+      // Bold text
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      
+      // Italic text
+      .replace(/\*(.*?)\*/g, '<em class="italic text-gray-200">$1</em>')
+      
+      // Code blocks
+      .replace(/```([\s\S]*?)```/g, '<pre class="bg-gray-800 p-3 rounded-lg mt-2 mb-2 overflow-x-auto"><code class="text-green-400 text-sm">$1</code></pre>')
+      
+      // Inline code
+      .replace(/`(.*?)`/g, '<code class="bg-gray-800 px-2 py-1 rounded text-green-400 text-sm">$1</code>')
+      
+      // Links
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+      
+      // Line breaks
+      .replace(/\n\n/g, '</p><p class="mb-2">')
+      .replace(/\n/g, '<br>')
+      
+      // Lists
+      .replace(/^[\*\-] (.*$)/gm, '<li class="ml-4 mb-1">• $1</li>')
+      
+      // Wrap in paragraph tags
+      .replace(/^(?!<[h1-6]|<li|<pre|<code)(.+)/gm, '<p class="mb-2">$1</p>');
+
+    return html;
   };
 
   const sampleQuestions = [
@@ -111,7 +166,14 @@ const AskAI = () => {
                         </motion.div>
                       )}
                       <div className="flex-1">
-                        <p className="text-sm leading-relaxed">{message.content}</p>
+                        {message.isMarkdown ? (
+                          <div 
+                            className="text-sm leading-relaxed prose prose-invert max-w-none"
+                            dangerouslySetInnerHTML={{ __html: renderMarkdown(message.content) }}
+                          />
+                        ) : (
+                          <p className="text-sm leading-relaxed">{message.content}</p>
+                        )}
                       </div>
                     </div>
                   </motion.div>

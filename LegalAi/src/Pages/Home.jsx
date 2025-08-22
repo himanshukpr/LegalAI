@@ -229,6 +229,39 @@ const Home = () => {
               </p>
             </motion.div>
           </motion.div>
+
+          {/* Latest Legal News Button Section */}
+          <motion.div
+            className="mt-16 text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link
+                to="/news"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                <span className="text-xl">📰</span>
+                <span>Get Latest Laws & Rules Updates</span>
+                <motion.span
+                  className="text-lg"
+                  initial={{ x: 0 }}
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  →
+                </motion.span>
+              </Link>
+            </motion.div>
+            <p className="text-gray-400 mt-3 text-sm">
+              Stay updated with the most recent legal developments in India
+            </p>
+          </motion.div>
         </div>
       </motion.section>
 
