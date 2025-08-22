@@ -9,6 +9,9 @@ import About from './Pages/About';
 import Contact from './Pages/Contact';
 import Services from './Pages/Services';
 
+
+import News from './components/News';
+
 const Router = () => {
   const location = useLocation();
 
@@ -63,7 +66,16 @@ const Router = () => {
             </PageTransition>
           } 
         />
+        <Route 
+          path="/news" 
+          element={
+            <PageTransition>
+              <News />
+            </PageTransition>
+          } 
+        />
       </Routes>
+
     </AnimatePresence>
   );
 };

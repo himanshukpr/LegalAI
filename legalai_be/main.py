@@ -1,4 +1,5 @@
 import flask
+from flask_cors import CORS
 import os
 import re
 import json
@@ -16,6 +17,7 @@ from legalai_be.crew import LegalaiBe
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 app = flask.Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/api/ai_research', methods=['POST'])
 def run():
@@ -92,11 +94,19 @@ def get_news():
                 parsed = None
 
     if parsed is None:
-        # If still not parsed, raise so frontend knows something went wrong (no extra prints)
-        raise "There is some problem with the response, Please try again later "
+        # If still not parsed, return error response
+        return flask.jsonify({
+            "error": "There is some problem with the response, Please try again later",
+            "recent_laws_and_rules_india": []
+        }), 500
 
-    # Print only the JSON string (no extra logs)
-    return parsed
+    # Create response with CORS headers
+    response = flask.jsonify(parsed)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    
+    return response
 
 
 def main():
