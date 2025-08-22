@@ -1,0 +1,25 @@
+[project]
+name = "legalai_be"
+version = "0.1.0"
+description = "LegalAi_BE using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]>=0.157.0,<1.0.0",
+    "flask>=3.1.2",
+    "google-genai>=1.31.0",
+]
+
+[project.scripts]
+legalai_be = "legalai_be.main:run"
+run_crew = "legalai_be.main:run"
+train = "legalai_be.main:train"
+replay = "legalai_be.main:replay"
+test = "legalai_be.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
