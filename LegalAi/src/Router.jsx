@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import PageTransition from './components/PageTransition';
+import PageTransition from './components/common/PageTransition';
 import Home from './Pages/Home';
 import AskAI from './Pages/AskAI';
 import LegalDocs from './Pages/LegalDocs';
@@ -9,8 +9,8 @@ import About from './Pages/About';
 import Contact from './Pages/Contact';
 import Services from './Pages/Services';
 
-
-import News from './components/News';
+import TestimonialsPage from './Pages/TestimonialsPage';
+import News from './components/news/News';
 
 const Router = () => {
   const location = useLocation();
@@ -73,6 +73,14 @@ const Router = () => {
               <News />
             </PageTransition>
           } 
+        />
+        <Route 
+          path="/testimonials" 
+          element={
+            <PageTransition>
+              <TestimonialsPage />
+            </PageTransition>
+          }
         />
       </Routes>
 

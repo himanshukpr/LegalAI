@@ -282,6 +282,7 @@ const Header = () => {
               </motion.div>
             </motion.button>
 
+          <Link to="/testimonials"> 
             <motion.button
               className={`px-4 py-2 rounded-lg text-sm font-medium relative overflow-hidden ${
                 isScrolled
@@ -315,6 +316,7 @@ const Header = () => {
                 transition={springConfig}
               />
             </motion.button>
+            </Link>
           </div>
         </motion.div>
 

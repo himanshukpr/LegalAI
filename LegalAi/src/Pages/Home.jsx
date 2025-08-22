@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import DarkVeil from '../components/DarkVeil';
+import DarkVeil from '../components/home/DarkVeil';
 import { Link } from 'react-router-dom';
 import { motion, useAnimation, useInView } from 'framer-motion';
-import Buttons from '../components/Buttons';
+import Buttons from '../components/home/Buttons';
 
 const Home = () => {
   const containerVariants = {
@@ -308,6 +308,7 @@ const Home = () => {
       </motion.section>
 
       {/* Testimonials Section */}
+      {/* Testimonials Section */}
       <section className="py-20 bg-gray-800">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -319,51 +320,104 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-900 p-8 rounded-xl border border-gray-700">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Video Testimonial 1 */}
+            <motion.div 
+              className="bg-gray-900 p-6 rounded-xl border border-gray-700 hover:border-blue-500 transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="aspect-video mb-4">
+                <iframe 
+                  className="w-full h-full rounded-lg"
+                  src="https://www.youtube.com/embed/WJitbK6CSTM" 
+                  title="Jane Smith Testimonial"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="flex items-center mb-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
                   JS
                 </div>
-                <div className="ml-4">
-                  <div className="font-semibold text-white">Jane Smith</div>
-                  <div className="text-gray-400">Senior Partner, Legal Corp</div>
+                <div className="ml-3">
+                  <div className="font-semibold text-white text-sm">Jane Smith</div>
+                  <div className="text-gray-400 text-xs">Senior Partner, Legal Corp</div>
                 </div>
               </div>
-              <p className="text-gray-300">
+              <p className="text-gray-300 text-sm leading-relaxed">
                 "LegalAI has transformed how we approach legal research. What used to take hours now takes minutes."
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-gray-900 p-8 rounded-xl border border-gray-700">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+            {/* Video Testimonial 2 */}
+            <motion.div 
+              className="bg-gray-900 p-6 rounded-xl border border-gray-700 hover:border-blue-500 transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="aspect-video mb-4">
+                <iframe 
+                  className="w-full h-full rounded-lg"
+                  src="https://www.youtube.com/embed/yF8jUDzz5bE"  // Harvard Law School video
+                  title="Mike Davis Testimonial"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="flex items-center mb-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
                   MD
                 </div>
-                <div className="ml-4">
-                  <div className="font-semibold text-white">Mike Davis</div>
-                  <div className="text-gray-400">Criminal Defense Attorney</div>
+                <div className="ml-3">
+                  <div className="font-semibold text-white text-sm">Mike Davis</div>
+                  <div className="text-gray-400 text-xs">Criminal Defense Attorney</div>
                 </div>
               </div>
-              <p className="text-gray-300">
+              <p className="text-gray-300 text-sm leading-relaxed">
                 "The document analysis feature is incredible. It catches details I might have missed and saves me hours."
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-gray-900 p-8 rounded-xl border border-gray-700">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                  AL
+            {/* Video Testimonial 3 */}
+            <motion.div 
+              className="bg-gray-900 p-6 rounded-xl border border-gray-700 hover:border-blue-500 transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className="aspect-video mb-4">
+                <iframe 
+                  className="w-full h-full rounded-lg"
+                  src="https://www.youtube.com/embed/ZSvK_6GCn_I"  // Legal Tech video
+                  title="Sarah Chen Testimonial"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="flex items-center mb-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                  SC
                 </div>
-                <div className="ml-4">
-                  <div className="font-semibold text-white">Anna Lee</div>
-                  <div className="text-gray-400">Corporate Lawyer</div>
+                <div className="ml-3">
+                  <div className="font-semibold text-white text-sm">Sarah Chen</div>
+                  <div className="text-gray-400 text-xs">IP Law Specialist</div>
                 </div>
               </div>
-              <p className="text-gray-300">
-                "LegalAI is like having a brilliant research assistant available 24/7. Absolutely game-changing."
+              <p className="text-gray-300 text-sm leading-relaxed">
+                "The AI assistance has revolutionized how we handle intellectual property cases. Simply remarkable."
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -372,23 +426,23 @@ const Home = () => {
       <section className="py-20 bg-gradient-to-r from-blue-900 to-purple-900">
         <div className="max-w-4xl mx-auto text-center px-6">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Ready to Transform Your Legal Practice?
+            Ready to Transform Your Legal Knowledge?
           </h2>
           <p className="text-xl text-gray-200 mb-8">
-            Join thousands of legal professionals who are already using AI to work smarter, not harder.
+            Join our community who are already using AI to work smarter, not harder.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/askai"
               className="px-8 py-4 bg-white text-blue-900 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
-              Start Free Trial
+              Start Learning
             </Link>
             <Link
               to="/contact"
               className="px-8 py-4 border border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-900 transition-all duration-300"
             >
-              Contact Sales
+              Contact
             </Link>
           </div>
         </div>
