@@ -41,26 +41,26 @@ const Contact = () => {
     {
       icon: "📧",
       title: "Email Us",
-      content: "support@legalai.com",
+      content: "himanshu.kapoor@legalai.com",
       description: "Send us an email and we'll get back to you within 24 hours"
     },
     {
       icon: "📞",
       title: "Call Us",
-      content: "+1 (555) 123-4567",
-      description: "Speak with our team Monday to Friday, 9AM to 6PM EST"
+      content: "+91 98765 43210",
+      description: "Speak with our team Monday to Friday, 9AM to 6PM IST"
     },
     {
       icon: "📍",
-      title: "Visit Us",
-      content: "123 Legal Street, Law City, LC 12345",
-      description: "Our headquarters are open for meetings by appointment"
+      title: "Location",
+      content: "Delhi, India",
+      description: "Based in Delhi, serving clients across India and globally"
     },
     {
       icon: "💬",
       title: "Live Chat",
       content: "Available 24/7",
-      description: "Get instant help through our website chat support"
+      description: "Get instant help through our AI-powered chat support"
     }
   ];
 
@@ -92,8 +92,8 @@ const Contact = () => {
             Contact Us
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Have questions about LegalAI? We're here to help. Reach out to our team 
-            and discover how we can transform your legal practice.
+            Have questions about LegalAI? We're here to help. Reach out to Bismanjot Singh and Himanshu Kapoor 
+            to discover how we can transform your legal practice with our innovative AI technology.
           </p>
         </div>
       </section>
@@ -250,15 +250,15 @@ const Contact = () => {
               <div className="space-y-2 text-gray-300">
                 <div className="flex justify-between">
                   <span>Monday - Friday</span>
-                  <span>9:00 AM - 6:00 PM EST</span>
+                  <span>9:00 AM - 6:00 PM IST</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Saturday</span>
-                  <span>10:00 AM - 4:00 PM EST</span>
+                  <span>10:00 AM - 4:00 PM IST</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Sunday</span>
-                  <span>Closed</span>
+                  <span>Available for urgent inquiries</span>
                 </div>
               </div>
             </div>
@@ -294,16 +294,16 @@ const Contact = () => {
         <div className="mt-12 p-6 bg-gradient-to-r from-red-900/50 to-orange-900/50 rounded-xl border border-red-700/50">
           <div className="text-center">
             <h3 className="text-xl font-semibold text-white mb-2">
-              🚨 Need Urgent Support?
+              🚨 Need Priority Support?
             </h3>
             <p className="text-gray-300 mb-4">
-              For critical technical issues affecting your legal work, contact our emergency support line:
+              For critical technical issues affecting your legal work, contact our priority support:
             </p>
             <a
-              href="tel:+15551234567"
+              href="tel:+919876543210"
               className="inline-flex items-center px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors"
             >
-              📞 Emergency: +1 (555) 123-4567
+              📞 Priority Support: +91 98765 43210
             </a>
           </div>
         </div>

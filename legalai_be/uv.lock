@@ -1856,21 +1856,21 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "crewai", extra = ["tools"] },
+    { name = "crewai-tools" },
     { name = "flask" },
     { name = "flask-cors" },
     { name = "google-genai" },
     { name = "google-search-results" },
-    { name = "python-dotenv" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "crewai", extras = ["tools"], specifier = ">=0.157.0,<1.0.0" },
+    { name = "crewai-tools", specifier = ">=0.62.3" },
     { name = "flask", specifier = ">=3.1.2" },
     { name = "flask-cors", specifier = ">=6.0.1" },
     { name = "google-genai", specifier = ">=1.31.0" },
     { name = "google-search-results", specifier = ">=2.4.2" },
-    { name = "python-dotenv", specifier = ">=1.0.0" },
 ]
 
 [[package]]

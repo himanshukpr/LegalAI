@@ -1,69 +1,69 @@
 legal_research_task:
   description: >
-    Conduct comprehensive legal research on {topic}. Your research must include:
-    1. Identify all relevant laws, acts, and regulations (both central and state level if applicable)
-    2. Find applicable case law and precedents with proper citations
-    3. Research procedural requirements and compliance obligations
-    4. Identify any recent amendments or updates to relevant laws
-    5. Note any jurisdiction-specific considerations
-    6. Include relevant legal definitions and interpretations
-    7. Identify potential legal risks or considerations
-    Current year is {current_year} - ensure all information is up-to-date.
+    Find SHORT legal facts about {topic} for India.
+    Focus on:
+    1. Top 2-3 key laws/acts with 2-3 line definitions
+    2. Basic requirements (3-4 points)
+    3. Must include detailed online/offline step-by-step process
+    4. Official government links for India
+    Keep it VERY SHORT - maximum 200 words total.
+    Current year is {current_year}.
   expected_output: >
-    A comprehensive legal research report containing:
-    - List of applicable laws with section numbers and citations
-    - Relevant case law with proper citations (case name, year, court)
-    - Key legal definitions and interpretations
-    - Procedural requirements and timelines
-    - Recent amendments or changes
-    - Jurisdiction-specific considerations
-    - Potential legal issues or risks to consider
+    SHORT summary with:
+    - 2-3 main laws with definitions (2-3 lines each)
+    - 3-4 key requirements
+    - Detailed online and offline steps with portals/locations
+    - Official Indian government links
+    Maximum 200 words. Use bullet points only.
   agent: legal_researcher
 
 legal_analysis_task:
   description: >
-    Based on the legal research provided, create a detailed legal analysis for {topic} that includes:
-    1. Legal framework analysis - identify the primary and secondary legal sources
-    2. Rights and obligations analysis - what are the legal rights and duties involved
-    3. Risk assessment - potential legal risks and how to mitigate them
-    4. Compliance requirements - what must be done to stay legally compliant
-    5. Alternative legal options or approaches available
-    6. Consequences of non-compliance
-    Ensure all analysis is backed by proper legal citations and authorities.
+    Make {topic} research into SUPER SHORT summary for India.
+    Include:
+    1. What it is (one sentence)
+    2. Main requirement (one line)
+    3. Detailed online vs offline process steps
+    4. Important warning
+    Maximum 150 words total.
   expected_output: >
-    A structured legal analysis document containing:
-    - Executive summary of legal position
-    - Detailed legal framework breakdown
-    - Rights and obligations matrix
-    - Risk assessment with mitigation strategies
-    - Compliance checklist
-    - Alternative legal approaches
-    - Consequences and penalties for non-compliance
-    - Recommendations with legal backing
+    VERY SHORT summary:
+    - What: [one sentence]
+    - Need: [main requirement]
+    - Online: [detailed online process steps with portals]
+    - Offline: [detailed offline process steps with locations]
+    - Warning: [key warning]
+    Maximum 150 words.
   agent: legal_analyst
 
 procedure_guidance_task:
   description: >
-    Create a comprehensive step-by-step procedural guide for {topic} including:
-    1. Pre-requisites and eligibility criteria
-    2. Required documentation with templates/formats where applicable
-    3. Step-by-step process with timelines
-    4. Filing procedures and fee structures
-    5. Authority contacts and office locations
-    6. Appeal or review mechanisms if applicable
-    7. Common pitfalls to avoid
-    8. Post-completion follow-up requirements
-    Ensure all procedures are current as of {current_year}.
+    Create SHORT step-by-step guide for {topic} in India with:
+    1. Detailed online steps (4-6 steps with portal names)
+    2. Detailed offline steps (4-6 steps with office locations)
+    3. Required documents (5 max)
+    4. Official links for applications
+    5. Timeline and fees
+    Keep it under 250 words.
   expected_output: >
-    A complete procedural handbook formatted as a step-by-step guide containing:
-    - Eligibility checklist
-    - Document preparation guide with required formats
-    - Detailed step-by-step process with estimated timelines
-    - Fee structure and payment methods
-    - Authority contact information and office details
-    - Appeals and review process
-    - Troubleshooting guide for common issues
-    - Post-completion compliance requirements
-    - Quick reference checklist
-    Format as markdown with clear headings, numbered steps, and bullet points for easy reading.
+    SHORT guide:
+    
+    **Online Process:**
+    1. [Detailed step with specific portal/website]
+    2. [Detailed step with specific portal/website]
+    3. [Detailed step with specific portal/website]
+    4. [Additional steps as needed]
+    
+    **Offline Process:**
+    1. [Detailed step with specific office location]
+    2. [Detailed step with specific office location]
+    3. [Detailed step with specific office location]
+    4. [Additional steps as needed]
+    
+    **Documents:** [5 max]
+    **Timeline:** [duration]
+    **Fees:** [amount]
+    **Links:** [official government links]
+    
+    Maximum 250 words. Save as markdown.
   agent: procedure_specialist

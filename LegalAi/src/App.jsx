@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Layout from './components/Layout';
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
+import Layout from './components/layout/Layout';
 import Router from './Router';
 
 function App() {

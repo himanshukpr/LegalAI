@@ -33,7 +33,7 @@ const AskAI = () => {
     try {
       // Make API call to backend
       const response = await axios.post(`${BACKEND_URL}/api/ai_research`, {
-        "query": question.trim()
+        query: question.trim()
       });
 
       // Add AI response
@@ -152,7 +152,6 @@ const AskAI = () => {
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-700 text-gray-100'
                     }`}
-                    whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400 }}
                   >
                     <div className="flex items-start space-x-3">

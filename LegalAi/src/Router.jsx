@@ -4,13 +4,11 @@ import { AnimatePresence } from 'framer-motion';
 import PageTransition from './components/common/PageTransition';
 import Home from './Pages/Home';
 import AskAI from './Pages/AskAI';
-import LegalDocs from './Pages/LegalDocs';
 import About from './Pages/About';
 import Contact from './Pages/Contact';
-import Services from './Pages/Services';
 
 import TestimonialsPage from './Pages/TestimonialsPage';
-import News from './components/news/News';
+import News from './Pages/News';
 
 const Router = () => {
   const location = useLocation();
@@ -35,14 +33,6 @@ const Router = () => {
           } 
         />
         <Route 
-          path="/legaldocs" 
-          element={
-            <PageTransition>
-              <LegalDocs />
-            </PageTransition>
-          } 
-        />
-        <Route 
           path="/about" 
           element={
             <PageTransition>
@@ -55,14 +45,6 @@ const Router = () => {
           element={
             <PageTransition>
               <Contact />
-            </PageTransition>
-          } 
-        />
-        <Route 
-          path="/services" 
-          element={
-            <PageTransition>
-              <Services />
             </PageTransition>
           } 
         />

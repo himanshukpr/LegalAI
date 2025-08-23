@@ -12,7 +12,7 @@ import warnings
 
 from datetime import datetime
 
-from legalai_be.crew import LegalaiBe
+from src.legalai_be.crew import LegalaiBe
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
@@ -39,32 +39,25 @@ def run():
                 "error": "Query cannot be empty"
             }), 400
 
-        # For now, let's use a simple response since LegalaiBe import is failing
-        # You can replace this with your actual crew implementation later
-        
-        # Simple AI response using the same Gemini client as news endpoint
-        client = genai.Client(api_key="AIzaSyCBCjV4BhCSUeXWoGxPxCWxIo3rB9To-6s")
+        # Check if this is a process/procedure query
+        if not _is_process_query(input_data):
+            # Handle as conversational query
+            return _handle_conversational_query(input_data)
 
-        # Create a legal research prompt
-        prompt = f"""
-        You are a legal research assistant. The user has asked: "{input_data}"
+        # Use the crew system with our enhanced tools for process queries
+        crew_instance = LegalaiBe().crew()
         
-        Provide a comprehensive, well-structured response that includes:
-        1. Direct answer to the question
-        2. Relevant legal principles or laws
-        3. Key considerations
-        4. Practical implications
+        # Get current year for the crew
+        current_year = datetime.now().year
         
-        Format your response in clear sections with headers using markdown.
-        Be accurate, informative, and professional.
-        """
-
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-
-        ai_response = getattr(response, "text", "") or str(response)
+        # Run the crew with the updated prompt
+        result = crew_instance.kickoff(inputs={
+            'topic': input_data,
+            'current_year': current_year
+        })
+        
+        # Extract the final result
+        ai_response = str(result)
         
         # Return in the format expected by frontend
         result = flask.jsonify({
@@ -81,18 +74,204 @@ def run():
         return result
         
     except Exception as e:
-        error_response = flask.jsonify({
-            "success": False,
-            "error": str(e),
-            "response": f"Sorry, I encountered an error: {str(e)}. Please try again."
+        # Fallback to simple Gemini response if crew fails
+        try:
+            if _is_process_query(input_data):
+                # Use detailed process format
+                client = genai.Client(api_key="AIzaSyCBCjV4BhCSUeXWoGxPxCWxIo3rB9To-6s")
+
+                prompt = f"""
+                User asked: "{input_data}"
+                
+                Provide SHORT legal process information for India only. Format:
+                
+                ## Main Laws & Definitions
+                • **[Law 1 Name]**
+                  [2-3 line definition explaining what this law covers]
+                • **[Law 2 Name]**
+                  [2-3 line definition explaining what this law covers]
+                
+                ## Online Process (Detailed Steps)
+                1. **[Step Title]**
+                   - [Detailed action to take]
+                   - Portal: [specific website/portal]
+                
+                2. **[Step Title]**
+                   - [Detailed action to take]
+                   - Portal: [specific website/portal]
+                
+                ## Offline Process (Detailed Steps)
+                1. **[Step Title]**
+                   - [Detailed action to take]
+                   - Location: [specific office/location]
+                
+                2. **[Step Title]**
+                   - [Detailed action to take]
+                   - Location: [specific office/location]
+                
+                ## Documents
+                • [Doc 1]
+                • [Doc 2]
+                • [Doc 3]
+                
+                ## Official Links
+                • [Official government link]
+                • [Application portal]
+                
+                **Timeline:** [duration]
+                **Fees:** [amount]
+                
+                Keep under 250 words. Focus on India only. Include law definitions and detailed step-by-step processes.
+                """
+            else:
+                # Use conversational format
+                client = genai.Client(api_key="AIzaSyCBCjV4BhCSUeXWoGxPxCWxIo3rB9To-6s")
+
+                prompt = f"""
+                User asked: "{input_data}"
+                
+                Provide a helpful conversational response about legal matters in India. 
+                Do NOT provide detailed process steps unless specifically asked for a procedure or process.
+                
+                Keep the response informative but conversational, under 150 words.
+                If the user needs process information, suggest they ask about specific procedures.
+                """
+
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
+
+            ai_response = getattr(response, "text", "") or str(response)
+            
+        except Exception as fallback_error:
+            ai_response = f"Sorry, I encountered an error: {str(e)}. Fallback also failed: {str(fallback_error)}. Please try again."
+        
+        # Return fallback response
+        result = flask.jsonify({
+            "success": True,
+            "response": ai_response,
+            "result": ai_response
         })
         
-        # Add CORS headers even for error responses
-        error_response.headers.add('Access-Control-Allow-Origin', '*')
-        error_response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        error_response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        # Add CORS headers
+        result.headers.add('Access-Control-Allow-Origin', '*')
+        result.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        result.headers.add('Access-Control-Allow-Headers', 'Content-Type')
         
-        return error_response, 500
+        return result
+
+
+def _is_process_query(query: str) -> bool:
+    """Check if the query is asking for a legal process/procedure"""
+    query_lower = query.lower()
+    
+    # Strong process indicators - these clearly indicate process queries
+    strong_process_keywords = [
+        "registration", "register", "apply", "procedure", "process", "steps", 
+        "how to", "filing", "submit", "application", "documents required",
+        "requirements", "forms", "certificate", "license", "permit",
+        "incorporation", "dissolution", "transfer"
+    ]
+    
+    # Process-specific question patterns
+    process_patterns = [
+        "how do i", "how can i", "what is the procedure", "what are the steps",
+        "how to get", "how to obtain", "how to apply", "how to file",
+        "what documents", "which documents", "what forms", "which forms",
+        "where to apply", "where to submit", "when to apply", "timeline for",
+        "cost of", "fee for", "charges for", "time required for",
+        "how to start", "how to setup", "how to create", "how to establish"
+    ]
+    
+    # Check for strong process indicators first
+    has_strong_keywords = any(keyword in query_lower for keyword in strong_process_keywords)
+    has_process_patterns = any(pattern in query_lower for pattern in process_patterns)
+    
+    # If we have strong indicators, it's definitely a process query
+    if has_strong_keywords or has_process_patterns:
+        return True
+    
+    # Additional check: if query is just asking "what is X" or "define X" or "explain X"
+    # then it's likely conversational, not process
+    conversational_patterns = [
+        "what is", "what are", "define", "explain", "meaning of", 
+        "concept of", "types of", "kinds of", "tell me about"
+    ]
+    
+    is_conversational = any(pattern in query_lower for pattern in conversational_patterns)
+    
+    # If it's clearly conversational, return False
+    if is_conversational:
+        return False
+    
+    # For edge cases, check if it contains specific legal areas combined with action words
+    legal_areas = ["company", "business", "property", "marriage", "divorce", "visa", "passport"]
+    action_words = ["buy", "sell", "purchase", "sale", "start", "setup", "create", "establish"]
+    
+    has_legal_area = any(area in query_lower for area in legal_areas)
+    has_action = any(action in query_lower for action in action_words)
+    
+    # If it has both legal area and action words, it's likely a process query
+    if has_legal_area and has_action:
+        return True
+    
+    # Default to conversational for ambiguous cases
+    return False
+
+
+def _handle_conversational_query(query: str):
+    """Handle conversational queries that don't need process information"""
+    try:
+        client = genai.Client(api_key="AIzaSyCBCjV4BhCSUeXWoGxPxCWxIo3rB9To-6s")
+
+        prompt = f"""
+        User asked: "{query}"
+        
+        Provide a helpful, conversational response about legal matters in India. 
+        Do NOT provide detailed process steps, laws, or formatted procedure information unless specifically asked.
+        
+        Keep the response informative but conversational, under 150 words.
+        If the user needs specific process information, suggest they ask about procedures or processes.
+        Focus on answering their question directly and naturally.
+        """
+
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+
+        ai_response = getattr(response, "text", "") or str(response)
+        
+        # Return conversational response
+        result = flask.jsonify({
+            "success": True,
+            "response": ai_response,
+            "result": ai_response
+        })
+        
+        # Add CORS headers
+        result.headers.add('Access-Control-Allow-Origin', '*')
+        result.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        result.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        
+        return result
+        
+    except Exception as e:
+        # Simple fallback for conversational queries
+        fallback_response = f"I can help you with legal information for India. If you need specific procedures or step-by-step guidance, please ask about the particular process you're interested in."
+        
+        result = flask.jsonify({
+            "success": True,
+            "response": fallback_response,
+            "result": fallback_response
+        })
+        
+        result.headers.add('Access-Control-Allow-Origin', '*')
+        result.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        result.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        
+        return result
 
 
 
