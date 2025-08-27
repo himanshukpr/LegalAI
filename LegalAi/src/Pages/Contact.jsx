@@ -41,7 +41,7 @@ const Contact = () => {
     {
       icon: "📧",
       title: "Email Us",
-      content: "himanshu.kapoor@legalai.com",
+      content: "himanshukpr12@gmail.com",
       description: "Send us an email and we'll get back to you within 24 hours"
     },
     {
@@ -53,8 +53,8 @@ const Contact = () => {
     {
       icon: "📍",
       title: "Location",
-      content: "Delhi, India",
-      description: "Based in Delhi, serving clients across India and globally"
+      content: "Ludhiana - Punjab, India",
+      description: "Based in Ludhiana, serving clients across India and globally"
     },
     {
       icon: "💬",

@@ -31,11 +31,25 @@ const TestimonialsPage = () => {
       description: 'Case studies and documented results',
       icon: '📄',
       bgColor: 'from-orange-600 to-red-600'
+    },
+    {
+      id: 'academic',
+      title: 'Academic Testimonials',
+      description: 'Feedback from law schools and educational institutions',
+      icon: '🎓',
+      bgColor: 'from-yellow-600 to-amber-600'
+    },
+    {
+      id: 'business',
+      title: 'Compliance & Business Users',
+      description: 'Testimonials from corporate compliance officers and business professionals',
+      icon: '💼',
+      bgColor: 'from-cyan-600 to-sky-600'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 pt-24">
+    <div className="min-h-screen bg-gray-900 pt-24  pb-24">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -51,7 +65,7 @@ const TestimonialsPage = () => {
         </motion.div>
 
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 "
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}

@@ -41,13 +41,13 @@ const About = () => {
   const teamMembers = [
     {
       name: "Bismanjot Singh",
-      role: "Co-Founder & Visionary",
+      role: "Founder & Visionary",
       image: "BS",
       bio: "The visionary behind LegalAI, conceptualized the idea of making legal services accessible through AI. Manages frontend development and user experience design."
     },
     {
       name: "Himanshu Kapoor",
-      role: "Co-Founder & Lead Developer",
+      role: "Founder & Lead Developer",
       image: "HK",
       bio: "Full-stack developer who brought the vision to life. Developed the entire product through collaborative discussions and technical implementation."
     }
